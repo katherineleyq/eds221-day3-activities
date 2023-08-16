@@ -173,7 +173,7 @@ for (i in seq_along(inlet_biochem)) {
 1.  Use *one other method* (e.g. `apply`, `across`, or `purrr::map_df`) to find the mean for each column.
 
 ```{r}
-apply(inlet_biochem$p_h, 2, mean)
+apply(inlet_biochem, 2, mean)
 ```
 
 ### **Save, stage, commit, pull, push!**
