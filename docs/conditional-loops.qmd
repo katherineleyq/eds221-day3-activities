@@ -83,11 +83,11 @@ if (main_ingredient == "veggie") {
 Create a new vector called `fish` that contains the values `8, 10, 12, 23` representing counts of different fish types in a fish tank (goldfish, tetras, guppies, and mollies, respectively). Write a for loop that iterates through `fish`, and returns what proportion of total fish in the tank are that species. Assume that these counts represent all fish in the tank.
 
 ```{r}
-## this answer is wrong
+## this answer might be wrong
 fish <- c("goldfish" = 3, "tetras" = 10, "guppies" = 12, "mollies" = 23)
 
 for (i in fish) {
-  prop_total = (fish[i] / sum(fish[i]))
+  prop_total = (fish[i] / sum(fish))
 }
 ```
 
@@ -141,25 +141,18 @@ toolik_biochem <- read_csv(here("data", "2011_Kling_Akchem.csv"), na = ".") %>%
   clean_names()
   
 inlet_biochem <- toolik_biochem %>% 
-  select(site, p_h, doc_u_m, tdn_u_m)
+  filter(site == "Toolik Inlet") %>% 
+  select(p_h, doc_u_m, tdn_u_m)
 
 # calculate mean values in 3 different ways
 
 #first way
 mean_inlet_biochem_1 <- inlet_biochem %>% 
-  group_by(site) %>% 
   summarize(mean_ph = mean(p_h, na.rm = TRUE),
             mean_doc = mean(doc_u_m, na.rm = TRUE),
             mean_tdn = mean(tdn_u_m, na.rm = TRUE))
 
-#second way
-mean_inlet_biochem_2 <- inlet_biochem %>% 
-  group_by(site)
-
-#third way
-
-
-#for loop - prob wrong?
+#second way using for loop - prob wrong?
 for (i in seq_along(inlet_biochem)) {
   if (is.numeric(inlet_biochem[i])) {
     inlet_biochem_mean <- mean(inlet_biochem[i], na.rm = TRUE)
@@ -167,15 +160,11 @@ for (i in seq_along(inlet_biochem)) {
   }
 }
 
-
-```
-
-1.  Use *one other method* (e.g. `apply`, `across`, or `purrr::map_df`) to find the mean for each column.
-
-```{r}
+# third way using apply()
 apply(inlet_biochem, 2, mean)
+
 ```
 
-### **Save, stage, commit, pull, push!**
+**Save, stage, commit, pull, push!**
 
 ## **END Day 3 activities**
